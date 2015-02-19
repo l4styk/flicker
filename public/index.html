@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>flicker</title>
+</head>
+<body>
+
+ <script type="text/javascript">
+var scriptTag = document.createElement('script');
+
+scriptTag.src = ' https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=66ca1290c1f1dcd55e739ddf7996e2d0&text=birds&per_page=10&page=2&format=json&jsoncallback=doIt'
+scriptTag.onload = function(){
+	console.log(this.textContent);
+
+}
+document.body.appendChild(scriptTag);
+// https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret.jpg}
+
+function doIt(data){
+	
+	
+	var theImages = data.photos.photo;
+	for (var i = 0; i < theImages.length; i++) {
+		var theImage = data.photos.photo[i];
+          console.log("in "+ theImage);
+		
+	  };
+
+	console.log("out "+ theImage);
+
+	var image = document.createElement('img');
+	image.src = ('https://farm'
+		+theImage.farm 
+		+'.staticflickr.com/'
+		+theImage.server
+		+'/'
+		+theImage.id
+		+'_'
+		+theImage.secret
+		+'.jpg'
+		);
+	image.height = 480;
+	image.width = 640;
+	document.getElementsByTagName('p')[0].appendChild(image);
+}
+
+</script>
+
+<h1>Flickr Picture</h1>
+
+<p></p>
+
+
+</body>
+</html>
